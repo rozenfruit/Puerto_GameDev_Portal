@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REDLINE // DATA_FEED</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --red: #ff003c; --black: #050505; }
+        body { 
+            margin: 0; background: var(--black); color: white; 
+            font-family: 'JetBrains Mono', monospace;
+            display: flex; height: 100vh; overflow: hidden;
+        }
+
+        /* --- Left Side: Visual Feed --- */
+        .visual-feed {
+            flex: 1.2; border-right: 1px solid var(--red);
+            position: relative; overflow: hidden;
+            background: #000;
+        }
+
+        #game-preview {
+            width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.6; transition: 0.5s;
+        }
+
+        .scan-line {
+            position: absolute; top: 0; width: 100%; height: 2px;
+            background: rgba(255, 0, 60, 0.3);
+            animation: scan 4s linear infinite;
+        }
+
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
+        /* --- Right Side: Data Feed --- */
+        .data-feed {
+            flex: 1; padding: 60px; display: flex; flex-direction: column;
+            background: linear-gradient(135deg, #0a0002 0%, #050505 100%);
+        }
+
+        .game-header { border-left: 5px solid var(--red); padding-left: 20px; margin-bottom: 40px; }
+        .game-header h2 { font-family: 'Orbitron'; font-size: 2.5rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .spec-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid #222; padding: 30px;
+            position: relative; margin-bottom: 20px;
+        }
+        .spec-box::before {
+            content: "ENCRYPTED_DATA"; position: absolute; top: -10px; left: 10px;
+            background: #080001; color: var(--red); font-size: 0.6rem; padding: 0 5px;
+        }
+
+        .info-label { color: var(--red); font-size: 0.8rem; margin-top: 15px; display: block; }
+        .info-value { font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
+
+        .btn-container { margin-top: auto; }
+        .play-btn {
+            width: 100%; padding: 25px; background: var(--red);
+            border: none; color: white; font-family: 'Orbitron';
+            font-size: 1.2rem; font-weight: 900; cursor: pointer;
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+            transition: 0.3s;
+        }
+
+        .play-btn:hover { background: #fff; color: var(--red); letter-spacing: 5px; }
+
+        .back-link {
+            display: inline-block; margin-top: 20px; color: #555; 
+            text-decoration: none; font-size: 0.8rem;
+        }
+        .back-link:hover { color: var(--red); }
+    </style>
+</head>
+<body>
+
+    <div class="visual-feed">
+        <div class="scan-line"></div>
+        <img id="game-preview" src="https://via.placeholder.com/1200x800/111/ff003c?text=LOADING+FEED..." alt="Gameplay">
+    </div>
+
+    <div class="data-feed">
+        <div class="game-header">
+            <h2 id="title">GAME_TITLE</h2>
+            <p id="subtitle" style="color:var(--red); margin: 5px 0 0 0;">SUB_PROTOCOL_ACTIVE</p>
+        </div>
+
+        <div class="spec-box">
+            <span class="info-label">PRIMARY_DEVELOPER</span>
+            <div id="dev" class="info-value">---</div>
+
+            <span class="info-label">MISSION_OBJECTIVE</span>
+            <div id="desc" class="info-value">Waiting for uplink...</div>
+        </div>
+
+        <div class="btn-container">
+            <button class="play-btn" onclick="alert('Connecting to Server...')">EXECUTE_GAME</button>
+            <a href="index.html" class="back-link">_RETURN_TO_HUB</a>
+        </div>
+    </div>
+
+    <script>
+        // This script handles the "Magic" of changing content
+        const gameData = {
+            'knightfall': {
+                title: 'Knightfall',
+                sub: 'Reclaiming COC',
+                dev: 'Apex Forge Studios',
+                desc: 'Reclaim your kingdom from the shadows. Heavy combat and tactical strategy.',
+                img: 'https://via.placeholder.com/1200x800/200000/ffffff?text=KNIGHTFALL+PREVIEW'
+            },
+            'lasthope': {
+                title: 'The Last Hope',
+                sub: 'Survival Protocol',
+                dev: 'Echo Sector',
+                desc: 'The world ended yesterday. How long can you survive the aftermath?',
+                img: 'https://via.placeholder.com/1200x800/222/ff003c?text=LAST+HOPE+PREVIEW'
+            },
+            'deadstreet': {
+                title: 'Dead Street',
+                sub: 'Urban Nightmare',
+                dev: 'Ghostware Labs',
+                desc: 'Every alleyway hides a secret. Every shadow is a threat. Don\'t look back.',
+                img: 'https://via.placeholder.com/1200x800/111/444?text=DEAD+STREET+PREVIEW'
+            },
+            'recmar': {
+                title: 'Recmar',
+                sub: 'Hari ng Manok',
+                dev: 'Manila Bit-Games',
+                desc: 'The ultimate cockpit simulation. Train. Fight. Become the legend of the pit.',
+                img: 'https://via.placeholder.com/1200x800/ff003c/000000?text=RECMAR+PREVIEW'
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const gameKey = params.get('game');
+
+        if(gameData[gameKey]) {
+            document.getElementById('title').innerText = gameData[gameKey].title;
+            document.getElementById('subtitle').innerText = gameData[gameKey].sub;
+            document.getElementById('dev').innerText = gameData[gameKey].dev;
+            document.getElementById('desc').innerText = gameData[gameKey].desc;
+            document.getElementById('game-preview').src = gameData[gameKey].img;
+        }
+    </script>
+</body>
+</html>
