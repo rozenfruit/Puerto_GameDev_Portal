@@ -33,35 +33,7 @@
         }
         #splash-logo { width: 500px; animation: logoPulse 2s infinite ease-in-out; }
 
-        /* --- REVERTED TO SMALL/SLEEK LOGO TAB --- */
-        .logo-tab {
-            position: absolute; top: 0; left: 0;
-            background: var(--neon-red); 
-            padding: 25px 120px 25px 50px; 
-            clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-            z-index: 110; box-shadow: 10px 0 30px rgba(255, 0, 60, 0.4);
-            display: flex; align-items: center; gap: 20px;
-        }
-        .logo-img-small { 
-            height: 60px; 
-            width: auto;
-            display: block;
-            filter: drop-shadow(0px 0px 2px black); 
-            position: relative;
-            z-index: 5;
-        }
-        .logo-text { 
-            font-family: 'Barlow Condensed', sans-serif; 
-            font-weight: 800; 
-            font-style: italic; 
-            font-size: 1.6rem; 
-            color: black; 
-            letter-spacing: 1px;
-            line-height: 1;
-            text-transform: uppercase;
-        }
-
-        /* --- AUDIO CONTROLS (THEMED RED TEXT) --- */
+        /* --- AUDIO CONTROLS --- */
         .audio-container {
             position: absolute; top: 0; right: 50px;
             z-index: 110; display: flex; align-items: center; gap: 15px;
@@ -77,14 +49,14 @@
         }
         
         input[type=range] { -webkit-appearance: none; background: transparent; width: 90px; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 3px; background: rgba(255, 0, 60, 0.3); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 3px; background: rgba(255, 0, 60, 0.3); border-radius: 2px; }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none; height: 12px; width: 12px; border-radius: 50%;
             background: var(--neon-red); cursor: pointer; margin-top: -4px;
             box-shadow: 0 0 10px var(--neon-red);
         }
 
-        /* --- STAGE HEADER --- */
+        /* --- STAGE HEADER & GLITCH --- */
         .stage-header {
             width: 100%; height: 45vh; position: relative;
             display: flex; justify-content: center; align-items: center;
@@ -96,12 +68,17 @@
             object-fit: cover; opacity: 0; filter: brightness(0.7) contrast(1.1);
             animation: slideFade 10s infinite;
         }
-        .slideshow-container::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--neon-red); mix-blend-mode: color; opacity: 0.3; z-index: 2; }
+        .slideshow-container::after { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--neon-red); mix-blend-mode: color; opacity: 0.3; z-index: 2; 
+        }
         .slide:nth-child(2) { animation-delay: 5s; }
+        
         @keyframes slideFade { 0% { opacity: 0; } 10% { opacity: 0.6; } 50% { opacity: 0.6; } 60% { opacity: 0; } 100% { opacity: 0; } }
 
-        /* --- RESTORED ORIGINAL H1 STYLE --- */
         .header-content { position: relative; z-index: 5; text-align: center; }
+        
+        /* RESTORED H1 WITH ADDED GLITCH LOGIC */
         .header-content h1 { 
             font-size: clamp(3rem, 12vw, 7.5rem); 
             font-style: italic; 
@@ -111,7 +88,57 @@
             -webkit-text-stroke: 1px rgba(0,0,0,0.8); 
             text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8); 
             letter-spacing: -2px; 
+            position: relative;
+            cursor: default;
         }
+
+        /* Glitch Effect on Hover */
+        .header-content h1:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        }
+
+        .header-content h1::before,
+        .header-content h1::after {
+            content: "PUERTO PORTAL";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+            display: none;
+        }
+
+        .header-content h1:hover::before {
+            display: block;
+            color: #0ff;
+            z-index: -1;
+            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
+        }
+
+        .header-content h1:hover::after {
+            display: block;
+            color: var(--neon-red);
+            z-index: -2;
+            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            33% { transform: translate(-5px, -2px); }
+            66% { transform: translate(5px, 2px); }
+            100% { transform: translate(0); }
+        }
+
         .system-status { font-family: 'JetBrains Mono', monospace; color: var(--neon-red); font-size: 0.9rem; margin-top: 20px; letter-spacing: 10px; font-weight: bold; text-shadow: 0 0 10px #000; }
 
         /* --- PORTAL GRID --- */
@@ -136,6 +163,7 @@
         }
         .tekken-card:hover .card-preview-gif { opacity: 1; }
         .tekken-card:hover { flex: 2.2; transform: skewX(-8deg) scale(1.05) translateY(-10px); border-color: var(--neon-red); z-index: 99; box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4); }
+        
         .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 2; }
         .game-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; color: white; text-transform: uppercase; line-height: 1; margin: 0; text-shadow: 2px 2px 5px #000; }
 
@@ -146,8 +174,8 @@
         /* --- TICKER --- */
         .news-ticker { position: fixed; bottom: 0; width: 100%; background: var(--neon-red); color: black; padding: 12px 0; font-family: 'JetBrains Mono', monospace; font-weight: 900; z-index: 1000; overflow: hidden; }
         .ticker-content { display: inline-block; animation: scroll 25s linear infinite; white-space: nowrap; }
+        
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
         @keyframes logoPulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
     </style>
 </head>
@@ -155,11 +183,6 @@
 
     <div id="splash-screen">
         <img id="splash-logo" src="puertodev.png" alt="Puerto Dev Logo">
-    </div>
-
-    <div class="logo-tab">
-        <img src="puertodev.png" class="logo-img-small" alt="Logo">
-        <div class="logo-text">PUERTO GAME DEVELOPMENT HUB</div>
     </div>
 
     <div class="audio-container">
@@ -227,6 +250,7 @@
 
         music.volume = 0.4; 
 
+        // Splash Screen Logic
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
@@ -235,9 +259,10 @@
             }, 3000);
         });
 
+        // Audio Toggle Logic
         function toggleAudio() {
             if (isMuted) {
-                music.play().catch(e => console.log("Audio play blocked"));
+                music.play().catch(e => console.log("Audio play blocked by browser"));
                 audioBtn.innerHTML = "[ SOUND_ON ]";
                 isMuted = false;
             } else {
@@ -247,10 +272,12 @@
             }
         }
 
+        // Real-time Volume Adjustment
         volumeSlider.addEventListener("input", (e) => {
             music.volume = e.target.value;
         });
 
+        // Hover SFX Execution
         function playHover() {
             if (!isMuted && sound) {
                 sound.pause();
@@ -258,7 +285,6 @@
                 sound.play().catch(e => {});
             }
         }
-        
     </script>
 </body>
 </html>
