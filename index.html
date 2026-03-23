@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUERTO_DEV // COLORED_PORTAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Barlow+Condensed:ital,wght@1,800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <title>PUERTO_DEV // PORTAL_2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Barlow+Condensed:ital,wght@1,800;1,900&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --neon-red: #ff003c;
@@ -24,102 +24,101 @@
             background-size: 50px 50px;
         }
 
-        /* --- LOGO TAB --- */
+        /* --- SPLASH SCREEN --- */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 5000; display: flex; 
+            justify-content: center; align-items: center;
+            transition: opacity 1s ease, visibility 1s;
+        }
+        #splash-logo { width: 500px; animation: logoPulse 2s infinite ease-in-out; }
+
+        /* --- REVERTED TO SMALL/SLEEK LOGO TAB --- */
         .logo-tab {
-            position: absolute; top: 0; left: 50px;
-            background: var(--neon-red); padding: 15px 30px;
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
-            z-index: 110; box-shadow: 0 5px 15px rgba(255, 0, 60, 0.4);
+            position: absolute; top: 0; left: 0;
+            background: var(--neon-red); 
+            padding: 25px 120px 25px 50px; 
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+            z-index: 110; box-shadow: 10px 0 30px rgba(255, 0, 60, 0.4);
+            display: flex; align-items: center; gap: 20px;
         }
-        .logo-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-style: italic; font-size: 1.4rem; color: black; }
-
-        /* --- COLORED SLIDESHOW HEADER --- */
-        .stage-header {
-            width: 100%;
-            height: 45vh;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 5px solid var(--neon-red);
-            overflow: hidden;
-            background: #000;
-        }
-
-        /* Slideshow Container */
-        .slideshow-container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        /* THE FIX: Full Color Slides */
-        .slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            /* Grayscale removed for full color */
-            filter: brightness(0.7) contrast(1.1);
-            animation: slideFade 10s infinite;
-        }
-
-        /* Color Overlay to keep it on-brand */
-        .slideshow-container::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--neon-red);
-            mix-blend-mode: color; /* Blends the red tint with the GIF colors */
-            opacity: 0.3; /* Adjust to increase/decrease red tint */
-            z-index: 2;
-        }
-
-        .slide:nth-child(2) {
-            animation-delay: 5s;
-        }
-
-        @keyframes slideFade {
-            0% { opacity: 0; }
-            10% { opacity: 0.6; } /* Brighter now that it's colorful */
-            50% { opacity: 0.6; } 
-            60% { opacity: 0; }   
-            100% { opacity: 0; }
-        }
-
-        .header-content {
+        .logo-img-small { 
+            height: 60px; 
+            width: auto;
+            display: block;
+            filter: drop-shadow(0px 0px 2px black); 
             position: relative;
             z-index: 5;
-            text-align: center;
         }
-
-        .header-content h1 {
-            font-size: clamp(3rem, 12vw, 7.5rem);
-            font-style: italic;
+        .logo-text { 
+            font-family: 'Barlow Condensed', sans-serif; 
+            font-weight: 800; 
+            font-style: italic; 
+            font-size: 1.6rem; 
+            color: black; 
+            letter-spacing: 1px;
+            line-height: 1;
             text-transform: uppercase;
-            margin: 0;
-            line-height: 0.9;
-            /* Added deep outline/shadow for text visibility against colors */
-            -webkit-text-stroke: 1px rgba(0,0,0,0.8);
-            text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8);
-            letter-spacing: -2px;
         }
 
-        .system-status {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--neon-red);
-            font-size: 0.9rem;
-            margin-top: 20px;
-            letter-spacing: 10px;
-            font-weight: bold;
-            text-shadow: 0 0 10px #000;
+        /* --- AUDIO CONTROLS (THEMED RED TEXT) --- */
+        .audio-container {
+            position: absolute; top: 0; right: 50px;
+            z-index: 110; display: flex; align-items: center; gap: 15px;
+            background: rgba(255, 0, 60, 0.1); border: 1px solid var(--neon-red);
+            padding: 10px 25px;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
         }
+        .audio-tab {
+            cursor: pointer; font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.85rem; color: var(--neon-red);
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--neon-red);
+        }
+        
+        input[type=range] { -webkit-appearance: none; background: transparent; width: 90px; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 3px; background: rgba(255, 0, 60, 0.3); }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 12px; width: 12px; border-radius: 50%;
+            background: var(--neon-red); cursor: pointer; margin-top: -4px;
+            box-shadow: 0 0 10px var(--neon-red);
+        }
+
+        /* --- STAGE HEADER --- */
+        .stage-header {
+            width: 100%; height: 45vh; position: relative;
+            display: flex; justify-content: center; align-items: center;
+            border-bottom: 5px solid var(--neon-red); overflow: hidden; background: #000;
+        }
+        .slideshow-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; filter: brightness(0.7) contrast(1.1);
+            animation: slideFade 10s infinite;
+        }
+        .slideshow-container::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--neon-red); mix-blend-mode: color; opacity: 0.3; z-index: 2; }
+        .slide:nth-child(2) { animation-delay: 5s; }
+        @keyframes slideFade { 0% { opacity: 0; } 10% { opacity: 0.6; } 50% { opacity: 0.6; } 60% { opacity: 0; } 100% { opacity: 0; } }
+
+        /* --- RESTORED ORIGINAL H1 STYLE --- */
+        .header-content { position: relative; z-index: 5; text-align: center; }
+        .header-content h1 { 
+            font-size: clamp(3rem, 12vw, 7.5rem); 
+            font-style: italic; 
+            text-transform: uppercase; 
+            margin: 0; 
+            line-height: 0.9; 
+            -webkit-text-stroke: 1px rgba(0,0,0,0.8); 
+            text-shadow: 6px 6px 0px var(--neon-red), 0 0 30px rgba(0,0,0,0.8); 
+            letter-spacing: -2px; 
+        }
+        .system-status { font-family: 'JetBrains Mono', monospace; color: var(--neon-red); font-size: 0.9rem; margin-top: 20px; letter-spacing: 10px; font-weight: bold; text-shadow: 0 0 10px #000; }
 
         /* --- PORTAL GRID --- */
         .portal-grid {
             display: flex; gap: 20px; padding: 60px 50px;
             width: 95%; max-width: 1500px; perspective: 1000px;
         }
-
         .tekken-card {
             flex: 1; height: 500px; 
             background: rgba(15, 15, 15, 0.9); border: 1px solid #222;
@@ -127,93 +126,74 @@
             overflow: hidden; transform: skewX(-8deg); 
             transition: transform 0.5s var(--gentle-bounce), flex 0.5s var(--gentle-bounce), border-color 0.3s;
         }
-
-        .tekken-card:hover {
-            flex: 2.2;
-            transform: skewX(-8deg) scale(1.05) translateY(-10px);
-            border-color: var(--neon-red); z-index: 99;
-            box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4);
+        .card-preview-gif {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 0.4s ease;
+            transform: skewX(8deg) scale(1.2); 
+            filter: brightness(0.6) saturate(1.2);
+            z-index: 1;
         }
+        .tekken-card:hover .card-preview-gif { opacity: 1; }
+        .tekken-card:hover { flex: 2.2; transform: skewX(-8deg) scale(1.05) translateY(-10px); border-color: var(--neon-red); z-index: 99; box-shadow: 0 10px 50px rgba(255, 0, 60, 0.4); }
+        .card-inner { transform: skewX(8deg); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-sizing: border-box; position: relative; z-index: 2; }
+        .game-title { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; color: white; text-transform: uppercase; line-height: 1; margin: 0; text-shadow: 2px 2px 5px #000; }
 
-        .card-inner {
-            transform: skewX(8deg); height: 100%;
-            display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 30px; box-sizing: border-box;
-        }
-
-        .game-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 2.2rem;
-            color: white; text-transform: uppercase;
-            line-height: 1; margin: 0;
-            text-shadow: 2px 2px 5px #000;
-        }
-
-        /* --- INFO BOXES --- */
-        .info-section-bottom {
-            width: 90%; max-width: 1400px;
-            margin: 20px 0 120px 0;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
-        }
-
-        .info-box {
-            background: rgba(10, 10, 10, 0.8);
-            border-left: 4px solid var(--neon-red);
-            padding: 30px; font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem; line-height: 1.6;
-        }
+        /* --- INFO BOX --- */
+        .info-section-bottom { width: 90%; max-width: 1400px; margin: 20px 0 120px 0; }
+        .info-box { background: rgba(10, 10, 10, 0.8); border-left: 4px solid var(--neon-red); padding: 40px; font-family: 'JetBrains Mono', monospace; font-size: 1rem; line-height: 1.8; width: 100%; box-sizing: border-box; }
 
         /* --- TICKER --- */
-        .news-ticker {
-            position: fixed; bottom: 0; width: 100%;
-            background: var(--neon-red); color: black;
-            padding: 12px 0; font-family: 'JetBrains Mono', monospace;
-            font-weight: 900; z-index: 1000; overflow: hidden;
-        }
-        .ticker-content { display: inline-block; animation: scroll 25s linear infinite; }
+        .news-ticker { position: fixed; bottom: 0; width: 100%; background: var(--neon-red); color: black; padding: 12px 0; font-family: 'JetBrains Mono', monospace; font-weight: 900; z-index: 1000; overflow: hidden; }
+        .ticker-content { display: inline-block; animation: scroll 25s linear infinite; white-space: nowrap; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
+        @keyframes logoPulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="logo-tab"><div class="logo-text">PUERTO_DEV</div></div>
+    <div id="splash-screen">
+        <img id="splash-logo" src="puertodev.png" alt="Puerto Dev Logo">
+    </div>
+
+    <div class="logo-tab">
+        <img src="puertodev.png" class="logo-img-small" alt="Logo">
+        <div class="logo-text">PUERTO GAME DEVELOPMENT HUB</div>
+    </div>
+
+    <div class="audio-container">
+        <div class="audio-tab" onclick="toggleAudio()" id="audio-btn">[ SOUND_OFF ]</div>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.4">
+    </div>
 
     <header class="stage-header">
         <div class="slideshow-container">
             <img class="slide" src="https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyeTBldmVldzBuaTdmd2xzc3ZhdXc0ZTZ2YWFhdzN5d3Bjcjk2cWx1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/HIlTmfpYApLVThFsdS/giphy.gif">
             <img class="slide" src="https://64.media.tumblr.com/973d80ed127b451df18e94103b16d0b6/tumblr_oop4jgf1bM1qciqqno1_500.gif">
         </div>
-
         <div class="header-content">
-            <h1>CORE_PORTAL</h1>
-            <div class="system-status">>> MISSION_SELECT // BATCH_2024</div>
+            <h1>PUERTO PORTAL</h1>
+            <div class="system-status">>> BATCH_2026</div>
         </div>
     </header>
 
     <div class="portal-grid">
         <a href="gamepage.html?game=knightfall" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-inner">
-                <div class="game-title">KNIGHTFALL:<br>RECLAIMING COC</div>
-            </div>
+            <div class="card-preview-gif" style="background-image: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyeTBldmVldzBuaTdmd2xzc3ZhdXc0ZTZ2YWFhdzN5d3Bjcjk2cWx1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/HIlTmfpYApLVThFsdS/giphy.gif');"></div>
+            <div class="card-inner"><div class="game-title">KNIGHTFALL:<br>RECLAIMING COC</div></div>
         </a>
-
         <a href="gamepage.html?game=lasthope" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-inner">
-                <div class="game-title">THE LAST HOPE</div>
-            </div>
+            <div class="card-preview-gif" style="background-image: url('https://64.media.tumblr.com/973d80ed127b451df18e94103b16d0b6/tumblr_oop4jgf1bM1qciqqno1_500.gif');"></div>
+            <div class="card-inner"><div class="game-title">THE LAST HOPE</div></div>
         </a>
-
         <a href="gamepage.html?game=deadstreet" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-inner">
-                <div class="game-title">THE DEAD STREET</div>
-            </div>
+            <div class="card-preview-gif" style="background-image: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyeTBldmVldzBuaTdmd2xzc3ZhdXc0ZTZ2YWFhdzN5d3Bjcjk2cWx1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/HIlTmfpYApLVThFsdS/giphy.gif');"></div>
+            <div class="card-inner"><div class="game-title">THE DEAD STREET</div></div>
         </a>
-
         <a href="gamepage.html?game=recmar" class="tekken-card" onmouseenter="playHover()">
-            <div class="card-inner">
-                <div class="game-title">RECMAR:<br>HARI NG MANOK</div>
-            </div>
+            <div class="card-preview-gif" style="background-image: url('https://64.media.tumblr.com/973d80ed127b451df18e94103b16d0b6/tumblr_oop4jgf1bM1qciqqno1_500.gif');"></div>
+            <div class="card-inner"><div class="game-title">RECMAR:<br>HARI NG MANOK</div></div>
         </a>
     </div>
 
@@ -221,47 +201,63 @@
         <div class="info-box">
             [<b>PROJECT_INFO</b>]<br>
             Developed by <b>Puerto COC Students</b>. 
-            This portal is the main uplink for all local combat simulations.
-        </div>
-        <div class="info-box" style="border-left-color: #444;">
-            [<b>SYSTEM_LOGS</b>]<br>
-            UPLINK: ACTIVE // NODE: PH_SOUTH<br>
-            STATUS: <span style="color:var(--neon-red)">READY FOR DEPLOYMENT</span>
+            This portal is the main uplink for all local combat simulations for <b>Batch 2026</b>.
         </div>
     </div>
 
     <div class="news-ticker">
         <div class="ticker-content">
-            SYSTEM VERSION 4.0.4 LOADED... WELCOME COC STUDENTS... SELECT YOUR STAGE... CONNECTION STABLE...
+            BATCH 2026 ONLINE... GAME DEVELOPMENT 2026.....PUERTO CAMPUS... WELCOME COC STUDENTS... CONNECTION STABLE...
         </div>
     </div>
 
+    <audio id="bgMusic" loop>
+        <source src="homepage.mp3" type="audio/mpeg">
+    </audio>
     <audio id="hoverSound" preload="auto">
         <source src="SELECTION.mp3" type="audio/mpeg">
     </audio>
 
     <script>
         const sound = document.getElementById("hoverSound");
-        let audioUnlocked = false;
+        const music = document.getElementById("bgMusic");
+        const audioBtn = document.getElementById("audio-btn");
+        const volumeSlider = document.getElementById("volume-slider");
+        let isMuted = true;
 
-        document.addEventListener('mousedown', () => {
-            if (!audioUnlocked) {
-                sound.play().then(() => {
-                    sound.pause();
-                    sound.currentTime = 0;
-                    audioUnlocked = true;
-                });
+        music.volume = 0.4; 
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.style.display = 'none', 1000);
+            }, 3000);
+        });
+
+        function toggleAudio() {
+            if (isMuted) {
+                music.play().catch(e => console.log("Audio play blocked"));
+                audioBtn.innerHTML = "[ SOUND_ON ]";
+                isMuted = false;
+            } else {
+                music.pause();
+                audioBtn.innerHTML = "[ SOUND_OFF ]";
+                isMuted = true;
             }
-        }, { once: true });
+        }
+
+        volumeSlider.addEventListener("input", (e) => {
+            music.volume = e.target.value;
+        });
 
         function playHover() {
-            if (sound && audioUnlocked) {
+            if (!isMuted && sound) {
                 sound.pause();
                 sound.currentTime = 0;
-                sound.play().catch(e => console.log("Sound Error"));
+                sound.play().catch(e => {});
             }
         }
     </script>
-
 </body>
 </html>
